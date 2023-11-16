@@ -2,12 +2,13 @@ package br.com.wszd.desafiopicpay.service;
 
 import br.com.wszd.desafiopicpay.domain.usuario.Usuario;
 import br.com.wszd.desafiopicpay.domain.usuario.UsuarioTipo;
+import br.com.wszd.desafiopicpay.dtos.UsuarioDTO;
 import br.com.wszd.desafiopicpay.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -32,5 +33,14 @@ public class UsuarioService {
 
     public Usuario findUsuarioById(Long idUsuario) throws Exception {
        return repository.findUsuarioById(idUsuario).orElseThrow(() -> new Exception("O usuario não foi encontrado!"));
+    }
+
+    public Usuario createUsuario(UsuarioDTO usuario) {
+        return repository.save(new Usuario(usuario));
+    }
+
+
+    public List<Usuario> listAllUsuarios() {
+        return repository.findAll();
     }
 }

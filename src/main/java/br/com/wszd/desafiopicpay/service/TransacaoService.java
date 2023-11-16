@@ -27,7 +27,10 @@ public class TransacaoService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void createTransaction(TransacaoDTO transacaoDTO) throws Exception {
+    @Autowired
+    private NotificacaoService notificacaoService;
+
+    public Transacao createTransaction(TransacaoDTO transacaoDTO) throws Exception {
         Usuario remetente = usuarioService.findUsuarioById(transacaoDTO.remetenteId());
         Usuario receptor = usuarioService.findUsuarioById(transacaoDTO.receptorId());
 
@@ -48,9 +51,13 @@ public class TransacaoService {
         remetente.setSaldo(remetente.getSaldo().subtract(transacaoDTO.valor()));
         receptor.setSaldo(receptor.getSaldo().add(transacaoDTO.valor()));
 
-        repository.save(transacao);
+        transacao = repository.save(transacao);
         usuarioService.saveUsuario(remetente);
         usuarioService.saveUsuario(receptor);
+
+        notificacaoService.enviaNotificacao(remetente, "Transacao enviada!");
+        notificacaoService.enviaNotificacao(receptor, "Transacao recebida!");
+        return transacao;
     }
 
     public boolean autorizaTransacao(Usuario remetente, BigDecimal valor){

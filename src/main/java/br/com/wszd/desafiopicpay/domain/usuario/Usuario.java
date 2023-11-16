@@ -1,5 +1,6 @@
 package br.com.wszd.desafiopicpay.domain.usuario;
 
+import br.com.wszd.desafiopicpay.dtos.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,4 +27,13 @@ public class Usuario {
     private BigDecimal saldo;
     @Enumerated(EnumType.STRING)
     private UsuarioTipo usuarioTipo;
+
+    public Usuario(UsuarioDTO data) {
+        this.nomeCompleto = data.nomeCompleto();
+        this.documento = data.documento();
+        this.email = data.email();
+        this.senha = data.senha();
+        this.saldo = data.saldo();
+        this.usuarioTipo = data.tipo();
+    }
 }
