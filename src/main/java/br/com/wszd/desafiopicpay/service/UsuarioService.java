@@ -4,6 +4,7 @@ import br.com.wszd.desafiopicpay.domain.usuario.Usuario;
 import br.com.wszd.desafiopicpay.domain.usuario.UsuarioTipo;
 import br.com.wszd.desafiopicpay.dtos.UsuarioDTO;
 import br.com.wszd.desafiopicpay.repository.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class UsuarioService {
     }
 
     public Usuario findUsuarioById(Long idUsuario) throws Exception {
-       return repository.findUsuarioById(idUsuario).orElseThrow(() -> new Exception("O usuario não foi encontrado!"));
+       return repository.findUsuarioById(idUsuario).orElseThrow(() -> new EntityNotFoundException("O usuario não foi encontrado!"));
     }
 
     public Usuario createUsuario(UsuarioDTO usuario) {
