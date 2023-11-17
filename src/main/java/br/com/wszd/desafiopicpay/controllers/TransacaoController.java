@@ -21,7 +21,7 @@ public class TransacaoController {
     @PostMapping
     public ResponseEntity<Transacao> criarTransacao(@RequestBody TransacaoDTO transacao) throws Exception {
 
-        Transacao nova = service.createTransaction(transacao);
+        Transacao nova = service.criarTransacao(transacao);
 
         return new ResponseEntity<>(nova, HttpStatus.OK);
     }
